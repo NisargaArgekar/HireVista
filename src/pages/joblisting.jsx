@@ -7,6 +7,16 @@ import useFetch from '@/hooks/use-fetch';
 import { useUser } from '@clerk/clerk-react';
 import { useEffect, useState } from 'react';
 import  {BarLoader} from 'react-spinners';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { State } from 'country-state-city';
 
 
 const JobListing = () => {
@@ -43,9 +53,20 @@ const JobListing = () => {
   },[isLoaded,location,company_id,searchQuery]);
 
 
-  const handleSearch=()=>{
+  const handleSearch=(e)=>{
+    e.preventDefault();
+    let formData = new FormData(e.target);
 
-  }
+    const query = formData.get("search-query");
+    if (query) setSearchQuery(query);
+};
+
+  const clearFilters = () =>{
+    setSearchQuery("");
+      setCompany_id("");
+      setLocation("");
+    
+  };
 
 
    if (!isLoaded) {
@@ -58,7 +79,7 @@ const JobListing = () => {
 
   {/* Add filters here */}
 
-  <form onSubmit={handleSearch}>
+  <form onSubmit={handleSearch} className='h-14 flex w-full gap-2 items-center mb-3'>
 
     <Input type='text'
     placeholder='Search jobs by title....'
@@ -68,6 +89,52 @@ const JobListing = () => {
     <Button type='submit' className='h-full sm:w-28' variant='green'> Search</Button>
 
   </form>
+
+  <div className="flex flex-col sm:flex-row gap-2 ">
+
+   
+    <Select value={location} onValueChange={(value)=>setLocation(value)}>
+      <SelectTrigger>
+        <SelectValue placeholder="Filter by Location" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {State.getStatesOfCountry("IN").map(({name})=>{
+            return(
+          <SelectItem  key={name}  value={name}>
+            {name}
+          </SelectItem>  );
+          })}
+          
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+   
+          
+     <Select value={company_id} onValueChange={(value)=>setCompany_id(value)}>
+      <SelectTrigger>
+        <SelectValue placeholder="Filter by Company" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {Companies?.map(({name,id})=>{
+            return(
+          <SelectItem  key={name}  value={id}>
+            {name}
+          </SelectItem>  );
+          })}
+          
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+   
+     <Button
+          className="sm:w-1/2"
+          variant="destructive"
+          onClick={clearFilters}>
+          Clear Filters
+        </Button>
+  </div>
 
   {loadingJobs && (
     <BarLoader className="mt-4" width={"100%"} color="#ffcc00" />

@@ -46,7 +46,7 @@ const JobCard= ({
 
 
 
-  return <Card>
+  return (<Card  className="flex flex-col">
     <CardHeader>
       <CardTitle className='flex justify-between font-bold'>{job.title}
 
@@ -98,6 +98,7 @@ const JobCard= ({
 
     </CardFooter>
   </Card>
+  );
 };
 
 export default JobCard;
