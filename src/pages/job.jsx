@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react'
 import { useUser } from '@clerk/clerk-react';
 import { useParams } from 'react-router-dom';
-import { getSingleJob } from '@/api/apiJobs';
+import { getSingleJob, updateHiringStatus } from '@/api/apiJobs';
 import  useFetch from  '@/hooks/use-fetch';
 import { BarLoader } from 'react-spinners';
 import { Briefcase, DoorClosedIcon, DoorOpenIcon, MapPinIcon } from 'lucide-react';
 import MDEditor from '@uiw/react-md-editor';
+import { SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+ } from '@radix-ui/react-select';
 
 const JobPage= () => {
 
@@ -20,6 +25,18 @@ const JobPage= () => {
     }= useFetch(getSingleJob,{
       job_id: id,
     });
+
+    const {  loading:loadingHiringStaus,fn:fnHiringStatus }= useFetch(
+      updateHiringStatus,
+      {
+      job_id:id,
+    });
+
+    const handleStatusChange = (value)=>{
+      const isOpen= value === "open"
+      fnHiringStatus(isOpen).then(()=>fnJob());
+
+    }
 
 
     useEffect(()=>{
@@ -63,6 +80,24 @@ const JobPage= () => {
 
     </div>
 {/* hiring status */}
+      {job?.recruiter_id === user?.id && 
+      <Select onValueChange={handleStatusChange}>
+      <SelectTrigger className={`w-full ${job?.isOpen ? "bg-green-900":"bg-red-900"}`}>
+        <SelectValue 
+        placeholder={
+          "Hiring Status" + (job?.isOpen ? "(Open)":"(Closed)")
+        }/>
+      </SelectTrigger>
+      <SelectContent>
+       
+          <SelectItem value="open">Open</SelectItem>
+          <SelectItem value="closed">Closed</SelectItem>    
+       
+          
+       
+      </SelectContent>
+    </Select>
+   }
 
     <h2 className='text-2xl sm:text-3xl font-bold'>About the job</h2>
     <p className='sm:text-lg'>{job?.description}</p>
