@@ -11,6 +11,7 @@ import { SelectItem,
   SelectTrigger,
   SelectValue,
  } from '@/components/ui/select';
+import ApplyJobDrawer from '@/components/apply-job';
 
 const JobPage= () => {
     const { id } = useParams();
@@ -41,9 +42,10 @@ const JobPage= () => {
       fnHiringStatus(isOpen).then(()=>fnJob());
     };
     
-    if(!isLoaded || loadingJob){
-      return <BarLoader className='mb-4' width={"100%"} color='#36d7b7'/>;
-    }
+   if (!isLoaded || loadingJob || !job) {
+  return <BarLoader className='mb-4' width={"100%"} color='#36d7b7' />;
+}
+
 
 
 
@@ -111,10 +113,21 @@ const JobPage= () => {
      source={job?.requirements}
      className='!bg-transparent !text-white sm:text-lg' 
      />
+
+     {/* render applications */}
+   {job?.recruiter_id !== user?.id && (
+  <ApplyJobDrawer
+    job={job}
+    user={user}
+    fetchJob={fnJob}
+    applied={job?.applications?.find((ap) => ap.candidate_id === user.id)}
+  />
+)}
+
      
   </div>
 
-//  render applications
+
  );
 };
  
