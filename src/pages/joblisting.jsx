@@ -12,7 +12,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -77,7 +76,7 @@ const JobListing = () => {
   <h1 className='gradient-title font-extrabold text-6xl sm:text-7xl text-center pb-8'>New Jobs
   </h1>
 
-  {/* Add filters here */}
+ 
 
   <form onSubmit={handleSearch} className='h-14 flex w-full gap-2 items-center mb-3'>
 
