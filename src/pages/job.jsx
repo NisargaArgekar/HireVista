@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getSingleJob, updateHiringStatus } from '@/api/apiJobs';
 import  useFetch from  '@/hooks/use-fetch';
 import { BarLoader } from 'react-spinners';
-import { Briefcase, DoorClosedIcon, DoorOpenIcon, MapPinIcon } from 'lucide-react';
+import { Briefcase, DoorClosedIcon, DoorOpenIcon, MapPinIcon, User } from 'lucide-react';
 import MDEditor from '@uiw/react-md-editor';
 import { SelectItem,
   SelectContent,
@@ -13,6 +13,7 @@ import { SelectItem,
  } from '@/components/ui/select';
 import ApplyJobDrawer from '@/components/apply-job';
 import ApplicationCard from '@/components/application-card';
+
 
 const JobPage= () => {
     const { id } = useParams();
@@ -31,7 +32,8 @@ const JobPage= () => {
     useEffect(()=>{
       if(isLoaded) 
         fnJob();
-    }, [isLoaded]);
+
+    },[isLoaded]);
 
 
     const {  loading:loadingHiringStatus,fn:fnHiringStatus }= useFetch(
@@ -48,6 +50,7 @@ const JobPage= () => {
    if (!isLoaded || loadingJob) {
   return <BarLoader className='mb-4' width={"100%"} color='#36d7b7' />
 }
+
 
   return (
     <div className='flex flex-col gap-8 mt-5'>
@@ -84,7 +87,7 @@ const JobPage= () => {
     </div>
       {/* hiring status */}
       {loadingHiringStatus && <BarLoader  width={"100%"} color='#36d7b7'/>}
-      {job?.recruiter_id === user?.id && (
+      {job?.recruiter_id == user.id && (
       <Select onValueChange={handleStatusChange}>
       <SelectTrigger
        className={`w-full ${job?.isOpen ? "bg-green-900":"bg-red-900"}`}>
@@ -132,9 +135,14 @@ const JobPage= () => {
           job?.applications.map((application)=>{
             return (
               <ApplicationCard key={application.id} application={application}/>
+              
             )
+            
           })
+          
         }
+       
+
       </div>
     )}
       
