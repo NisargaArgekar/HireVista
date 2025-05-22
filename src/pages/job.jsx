@@ -6,7 +6,7 @@ import  useFetch from  '@/hooks/use-fetch';
 import { BarLoader } from 'react-spinners';
 import { Briefcase, DoorClosedIcon, DoorOpenIcon, MapPinIcon, User } from 'lucide-react';
 import MDEditor from '@uiw/react-md-editor';
-import { SelectItem,
+import { Select,SelectItem,
   SelectContent,
   SelectTrigger,
   SelectValue,

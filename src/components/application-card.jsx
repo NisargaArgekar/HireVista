@@ -4,7 +4,7 @@ import { Download } from 'lucide-react'
 
 const ApplicationCard = ({application, isCandidate=false}) => {
 
-  console.log("ApplicationCard props:", application);
+
 
   const handleDownload = () =>{
     const link = document.createElement("a");
