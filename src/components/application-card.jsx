@@ -1,6 +1,6 @@
 import React from 'react'
-import {Card, CardHeader, CardTitle } from './ui/card'
-import { Download } from 'lucide-react'
+import {Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card'
+import { Boxes, BriefcaseBusiness, Download, School } from 'lucide-react'
 
 const ApplicationCard = ({application, isCandidate=false}) => {
 
@@ -17,7 +17,7 @@ const ApplicationCard = ({application, isCandidate=false}) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className='flex justify-between font-bold'>
+        <CardTitle className='flex justify-between items-center font-bold'>
             {
               isCandidate
               ? `${application?.job?.title} at ${application?.job?.company?.name}`
@@ -29,6 +29,31 @@ const ApplicationCard = ({application, isCandidate=false}) => {
             />
         </CardTitle>
       </CardHeader>
+
+      <CardContent className='flex flex-col gap-4 flex-1'>
+        <div className='flex flex-col md:flex-row justify-between'>
+          <div className='flex gap-2 items-center'>
+            <BriefcaseBusiness size={15}/>
+            {application?.experience} Years of Experience
+          </div>
+            <div className='flex gap-2 items-center'>
+            <School size={15}/>
+            {application?.education}
+          </div>
+            <div className='flex gap-2 items-center'>
+            <Boxes size={15}/>
+            skills: {application?.skills}
+          </div>
+        </div>
+        <hr/>
+      </CardContent>
+
+      <CardFooter className="flex justify-between">
+        <span>{new Date(application?.created_at).toLocaleString()}</span>
+        {!isCandidate?(
+          <span className='capitalize font-bold'>Status:{application?.status}</span>
+        ):<> </>}
+      </CardFooter>
     </Card>
   )
 }
