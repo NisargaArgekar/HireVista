@@ -4,6 +4,8 @@ import { Download } from 'lucide-react'
 
 const ApplicationCard = ({application, isCandidate=false}) => {
 
+  console.log("ApplicationCard props:", application);
+
   const handleDownload = () =>{
     const link = document.createElement("a");
     link.href = application?.resume;
@@ -31,4 +33,4 @@ const ApplicationCard = ({application, isCandidate=false}) => {
   )
 }
 
-export default ApplicationCard
+export default ApplicationCard;
