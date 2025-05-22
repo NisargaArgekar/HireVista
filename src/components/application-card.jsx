@@ -1,6 +1,11 @@
 import React from 'react'
 import {Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { Boxes, BriefcaseBusiness, Download, School } from 'lucide-react'
+import  useFetch from  '@/hooks/use-fetch';
+import { BarLoader } from 'react-spinners';
+import { updateApplicationStatus } from '@/api/apiApplication';
+import { Select,SelectTrigger,SelectContent,SelectItem,SelectValue} from '@components/ui/select';
+
 
 const ApplicationCard = ({application, isCandidate=false}) => {
 
@@ -13,9 +18,21 @@ const ApplicationCard = ({application, isCandidate=false}) => {
     link.click();
   }
 
+  const { loading: loadingHiringStatus, fn: fnHiringStatus } = useFetch(
+    updateApplicationStatus,
+    {
+      job_id: application.job_id,
+    }
+  );
+
+  const handleStatusChange = (status) => {
+    fnHiringStatus(status);
+  }
+
 
   return (
     <Card>
+      {loadingHiringStatus && <BarLoader width={"100%"} color='#36d7b7'/>}
       <CardHeader>
         <CardTitle className='flex justify-between items-center font-bold'>
             {
@@ -52,7 +69,21 @@ const ApplicationCard = ({application, isCandidate=false}) => {
         <span>{new Date(application?.created_at).toLocaleString()}</span>
         {!isCandidate?(
           <span className='capitalize font-bold'>Status:{application?.status}</span>
-        ):<> </>}
+        ):(
+       <Select onValueChange={handleStatusChange} defaultValue = {application.status}>
+      <SelectTrigger className="w-52">
+        <SelectValue placeholder="Application Status"/>
+      </SelectTrigger>
+      <SelectContent>
+      <SelectItem value="applied">Applied</SelectItem>
+      <SelectItem value="interviewing">Interviewing</SelectItem>
+      <SelectItem value="hired">Hired</SelectItem>
+      <SelectItem value="rejected">Rejected</SelectItem>    
+      </SelectContent>
+    </Select>
+    )
+        
+        }
       </CardFooter>
     </Card>
   )
