@@ -4,7 +4,7 @@ import { Boxes, BriefcaseBusiness, Download, School } from 'lucide-react'
 import  useFetch from  '@/hooks/use-fetch';
 import { BarLoader } from 'react-spinners';
 import { updateApplicationStatus } from '@/api/apiApplication';
-import { Select,SelectTrigger,SelectContent,SelectItem,SelectValue} from '@components/ui/select';
+import { Select,SelectTrigger,SelectContent,SelectItem,SelectValue} from '@/components/ui/select';
 
 
 const ApplicationCard = ({application, isCandidate=false}) => {
@@ -67,7 +67,7 @@ const ApplicationCard = ({application, isCandidate=false}) => {
 
       <CardFooter className="flex justify-between">
         <span>{new Date(application?.created_at).toLocaleString()}</span>
-        {!isCandidate?(
+        {isCandidate?(
           <span className='capitalize font-bold'>Status:{application?.status}</span>
         ):(
        <Select onValueChange={handleStatusChange} defaultValue = {application.status}>
