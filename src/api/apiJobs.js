@@ -99,15 +99,13 @@ export  async function updateHiringStatus(token,{job_id},isOpen){
 
 } 
 
-export  async function addNewJob(token, _,status,jobData){
-
-
+export  async function addNewJob(token, _,jobData){
     const supabase = await supabaseClient(token);
 
   
     const { data, error} =  await supabase
     .from("jobs")
-    .update({jobData})
+    .insert([jobData])
     .select();
    
        
