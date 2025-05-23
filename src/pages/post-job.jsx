@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from '@/components/ui/input';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from '@/components/ui/select';
@@ -78,6 +78,14 @@ const PostJob = () => {
     )}
 
     <div className='flex gap-4 items-center'>
+      <Controller
+      name="education"
+      control={control}
+      render={({ field }) => (
+
+        
+      )}
+      />
      <Select 
     //  value={location} 
     //  onValueChange={(value)=>setLocation(value)}
