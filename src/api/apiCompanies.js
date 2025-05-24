@@ -1,4 +1,4 @@
-import supabaseClient from "@/utils/supabase";
+import supabaseClient, {supabaseUrl} from "@/utils/supabase";
 export  async function getCompanies(token){
 
 
@@ -19,7 +19,7 @@ export  async function addNewCompany(token, _, companyData){
 const supabase = await supabaseClient(token);
 
   const random = Math.floor(Math.random() * 90000);
-  const fileName = `resume-${random}-${companyData}`;
+  const fileName = `logo-${random}-${companyData.name}`;
 
   const { error: storageError } = await supabase.storage
     .from("company-logo")
@@ -41,8 +41,8 @@ const supabase = await supabaseClient(token);
         name:companyData.name,
         logo_url,
     },
-]);
-.select();
+    ])
+    .select();
    
        
     if(error) {
