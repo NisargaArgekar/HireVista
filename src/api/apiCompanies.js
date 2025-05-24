@@ -26,7 +26,7 @@ const supabase = await supabaseClient(token);
     .upload(fileName, companyData.logo);
 
   if (storageError) {
-    console.error("Error Uploading Company Data:", error);
+    console.error("Error Uploading Company logo:", storageError);
     return null;
   }
 
