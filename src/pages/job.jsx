@@ -135,11 +135,9 @@ const JobPage= () => {
             return (
               <ApplicationCard key={application.id} application={application}/>
               
-            )
+            );
             
-          })
-          
-        }
+          })}
        
 
       </div>

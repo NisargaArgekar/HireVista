@@ -16,20 +16,13 @@ import useFetch from '@/hooks/use-fetch';
 import { useUser } from '@clerk/clerk-react';
 import { BarLoader } from 'react-spinners';
 import { getCompanies } from "@/api/apiCompanies";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
+
 import MDEditor from '@uiw/react-md-editor';
 import { Button } from '@/components/ui/button';
 import { addNewJob } from '@/api/apiJobs';
 import AddCompanyDrawer from '@/components/add-company-drawer';
-import {
-  Drawer,
-  DrawerTrigger,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerFooter,
-  DrawerClose
-} from "@/components/ui/drawer";
+
 
 
 
