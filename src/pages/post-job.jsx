@@ -4,7 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {Controller, useForm} from 'react-hook-form';
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from '@/components/ui/input';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from '@/components/ui/select';
+import {
+   Select,
+   SelectTrigger,
+   SelectValue,
+   SelectContent,
+   SelectGroup,
+   SelectItem } from '@/components/ui/select';
 import { State } from 'country-state-city';
 import useFetch from '@/hooks/use-fetch';
 import { useUser } from '@clerk/clerk-react';
@@ -15,7 +21,15 @@ import MDEditor from '@uiw/react-md-editor';
 import { Button } from '@/components/ui/button';
 import { addNewJob } from '@/api/apiJobs';
 import AddCompanyDrawer from '@/components/add-company-drawer';
-
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerFooter,
+  DrawerClose
+} from "@/components/ui/drawer";
 
 
 
@@ -67,8 +81,9 @@ const PostJob = () => {
   const onSubmit =  (data) => {
     fnCreateJob({
       ...data,
-      recruiter_id:user.id,
-      isOpen:true,
+      company_id: Number(data.company_id),
+      recruiter_id: user.id,
+      isOpen: true,
     })
   }
 
@@ -146,9 +161,9 @@ const PostJob = () => {
         <SelectGroup>
           {Companies?.map(({name,id})=>{
             return(
-          <SelectItem  key={name}  value={id}>
-            {name}
-          </SelectItem>  );
+          <SelectItem key={id} value={id}>
+  {name}
+</SelectItem>  );
           })}
           
         </SelectGroup>
@@ -158,10 +173,7 @@ const PostJob = () => {
       />
 
     {/* Add Company Drawer */}
-    <AddCompanyDrawer fetchCompanies={fnCompanies}/>
-
-
-
+    <AddCompanyDrawer fetchCompanies={fnCompanies} />
     </div>
     {errors.location && (
       <p className='text-red-500'>{errors.location.message}</p>
@@ -195,4 +207,4 @@ const PostJob = () => {
   
 }
 
-export default PostJob
+export default PostJob;
