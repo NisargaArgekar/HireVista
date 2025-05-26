@@ -56,7 +56,7 @@ const PostJob = () => {
     resolver: zodResolver(schema),
   })
 
-  const { fn: fnCompanies, data: Companies, loading:loadingCompanies} = useFetch(getCompanies);
+  const { fn: fnCompanies, data: Companies, loading:loadingCompanies, error: errorCompanies } = useFetch(getCompanies);
 
     useEffect(() => {
     if (isLoaded) {
@@ -92,6 +92,10 @@ const PostJob = () => {
 
   if(user?.unsafeMetadata?.role !== "recruiter"){
     return <Navigate to = "/jobs"/>
+  }
+
+  if (errorCompanies) {
+    return <p className="text-red-500">Failed to load companies: {errorCompanies.message}</p>;
   }
 
 
@@ -152,12 +156,11 @@ const PostJob = () => {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {Companies?.map(({name,id})=>{
-            return(
-          <SelectItem key={id} value={id}>
-  {name}
-</SelectItem>  );
-          })}
+          {(Companies || []).map(({name,id}) => (
+  <SelectItem key={id} value={id}>
+    {name}
+  </SelectItem>
+))}
           
         </SelectGroup>
       </SelectContent>
@@ -165,7 +168,6 @@ const PostJob = () => {
       )}
       />
 
-    {/* Add Company Drawer */}
     <AddCompanyDrawer fetchCompanies={fnCompanies} />
     </div>
     {errors.location && (

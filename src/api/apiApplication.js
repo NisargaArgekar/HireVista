@@ -83,4 +83,34 @@ export  async function getApplications(token, {user_id}){
     
     return data;
 
-} 
+}
+
+export async function getApplicationsForRecruiter(token, { recruiter_id }) {
+  const supabase = await supabaseClient(token);
+
+  
+  const { data: jobs, error: jobsError } = await supabase
+    .from("jobs")
+    .select("id")
+    .eq("recruiter_id", recruiter_id);
+
+  if (jobsError || !jobs) {
+    console.error("Error fetching jobs for recruiter:", jobsError);
+    return null;
+  }
+
+  const jobIds = jobs.map(job => job.id);
+
+ 
+  const { data, error } = await supabase
+    .from("application")
+    .select("*, jobs:jobs(title,company:companies(name))")
+    .in("job_id", jobIds);
+
+  if (error) {
+    console.error("Error fetching applications for recruiter:", error);
+    return null;
+  }
+
+  return data;
+}

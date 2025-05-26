@@ -35,15 +35,14 @@ const ApplicationCard = ({application, isCandidate=false}) => {
       {loadingHiringStatus && <BarLoader width={"100%"} color='#36d7b7'/>}
       <CardHeader>
         <CardTitle className='flex justify-between items-center font-bold'>
-            {
-              isCandidate
-              ? `${application?.job?.title} at ${application?.job?.company?.name}`
-              :application?.name
-            }
-            <Download size={18}
+          {isCandidate
+            ? `${application?.jobs?.title || "Unknown Job"} at ${application?.jobs?.company?.name || "Unknown Company"}`
+            : application?.name || "Unknown Applicant"}
+          <Download
+            size={18}
             className='bg-white text-black rounded-full h-8 w-8 p-1.5 cursor-pointer'
             onClick={handleDownload}
-            />
+          />
         </CardTitle>
       </CardHeader>
 
