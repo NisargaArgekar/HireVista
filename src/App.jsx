@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, Routes, Route } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
 import { ThemeProvider } from './components/theme-provider';
 
@@ -12,16 +12,8 @@ import SaveJob from './pages/saved-job'
 import JobPage from './pages/job'
 import MyJobApllication from './pages/my-jobs'
 import ProtectedRoute from './components/protected-route';
-import SignInPage from './pages/SignInPage'; // <-- create this component
 
 const router = createBrowserRouter([
-
-   {
-        path: '/sign-in',
-        element: 
-        <SignInPage />
-      
-    },
   {
     element:<AppLayout/>,
     children: [
@@ -86,7 +78,6 @@ const router = createBrowserRouter([
           <SaveJob/>
         </ProtectedRoute>),
       },
-     
 
     ]
   },
