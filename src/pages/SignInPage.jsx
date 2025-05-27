@@ -11,7 +11,7 @@ const SignInPage = () => {
         className="mt-4 px-4 py-2 bg-gray-400 text-white rounded text-black"
         onClick={() => navigate("/")}
       >
-        Back to Home
+       Back to Home
       </button>
     </div>
   );
