@@ -12,8 +12,13 @@ import SaveJob from './pages/saved-job'
 import JobPage from './pages/job'
 import MyJobApllication from './pages/my-jobs'
 import ProtectedRoute from './components/protected-route';
+import SignInPage from './pages/SignInPage';
 
 const router = createBrowserRouter([
+  {
+    path: '/sign-in',
+    element: <SignInPage />, // <-- Only renders sign-in, not AppLayout or LandingPage
+  },
   {
     element:<AppLayout/>,
     children: [
